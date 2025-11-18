@@ -1,10 +1,10 @@
-set(PROJECT_NAME ioq3)
+set(PROJECT_NAME ioq3-excessive)
 set(PROJECT_VERSION 1.36)
 
-set(SERVER_NAME ioq3ded)
-set(CLIENT_NAME ioquake3)
+set(SERVER_NAME ioq3ded-excessive)
+set(CLIENT_NAME ioquake3-excessive)
 
-set(BASEGAME baseq3)
+set(BASEGAME excessive)
 
 set(CGAME_MODULE cgame)
 set(GAME_MODULE qagame)
