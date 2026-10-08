@@ -31,6 +31,7 @@ jobs:
       run: |
         cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
         cmake --build build
+        python3 tests/excessive-smoke.py build/Release/ioq3ded-excessive
         cpack --config build/CPackConfig.cmake -B build/installer --verbose
         mv build/installer/*.deb build/Release
     - name: Upload
@@ -59,6 +60,7 @@ jobs:
           build/Release/**/*.dll
           build/Release/**/*.exe
           build/Release/**/*.qvm
+          build/Release/excessive/**/*
   windows-mingw:
     name: Windows MinGW
     runs-on: windows-2022
@@ -79,6 +81,7 @@ jobs:
           build/Release/**/*.dll
           build/Release/**/*.exe
           build/Release/**/*.qvm
+          build/Release/excessive/**/*
   macos:
     name: macOS
     runs-on: macos-15
