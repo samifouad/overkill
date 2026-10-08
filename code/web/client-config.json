@@ -15,6 +15,15 @@
             {"src": "baseq3/vm/ui.qvm", "dst": "/baseq3/vm"}
         ]
     },
+    "excessive": {
+        "files": [
+            {"src": "excessive/vm/qagame.qvm", "dst": "/excessive/vm"},
+            {"src": "excessive/description.pk3", "dst": "/excessive"},
+            {"src": "excessive/maplist.cfg", "dst": "/excessive"},
+            {"src": "excessive/motd.cfg", "dst": "/excessive"},
+            {"src": "excessive/readme.txt", "dst": "/excessive"}
+        ]
+    },
     "missionpack": {
         "files": [
             {"src": "missionpack/pak0.pk3", "dst": "/missionpack"},
