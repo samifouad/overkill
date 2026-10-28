@@ -51,29 +51,31 @@ Click on the latest successful workflow run and download the artifact for your p
 
 ### Requirements
 
-You'll need the original Quake 3 Arena game files (`pak0.pk3` from baseq3 folder). This project provides the engine and mod, but not the copyrighted game assets.
+You'll need the original Quake 3 Arena game files (`baseq3/pak0.pk3` through `pak8.pk3`). `pak0.pk3` comes from your purchased game; `pak1.pk3` through `pak8.pk3` are the point-release data. This project provides the engine and mod, but not the copyrighted game assets.
 
-Place your `pak0.pk3` in the `baseq3/` directory next to the executable.
+Place these files in the `baseq3/` directory next to the executable, or in your platform's Quake3 user-data directory below. The game data from a Windows installation can also be used with the macOS engine.
 
 ## 🎮 Quick Start
 
 ### macOS
 1. Download and open the `.dmg` file
 2. Drag `ioquake3-excessive.app` to Applications
-3. Copy your Q3 `pak0.pk3` to `~/Library/Application Support/Quake3/baseq3/`
+3. Copy your Q3 `pak0.pk3` through `pak8.pk3` to `~/Library/Application Support/Quake3/baseq3/`
 4. Launch and frag!
 
 ### Windows
 1. Run the installer `.exe`
-2. Copy your Q3 `pak0.pk3` to the installation directory's `baseq3/` folder
+2. Copy your Q3 `pak0.pk3` through `pak8.pk3` to the installation directory's `baseq3/` folder
 3. Run `ioquake3-excessive.exe`
 
 ### Linux
 1. Install the `.deb` package or extract the portable build
-2. Copy your Q3 `pak0.pk3` to `~/.q3a/baseq3/`
+2. Copy your Q3 `pak0.pk3` through `pak8.pk3` to `~/.q3a/baseq3/`
 3. Run `ioquake3-excessive`
 
 The Excessive mod loads automatically - no configuration needed!
+
+Builds deploy `excessive/` beside the client and dedicated server. On macOS it is also inside the app bundle, so dragging the app to Applications preserves the mod. To explicitly launch the base game instead, use `+set fs_game ""`.
 
 ## 🎯 Server Console Variables
 
@@ -96,12 +98,11 @@ ex_clear     - Disable all weapons
 ex_settings  - Show current weapon configuration
 ```
 
-## 🌐 Browser Version (Coming Soon!)
+## 🌐 Experimental Browser Build
 
-This project includes WebAssembly/Emscripten builds, bringing Excessive Overkill to your browser! Stay tuned for:
-- No installation required
-- Play anywhere, any device
-- Hosted version with click-to-play
+The Emscripten build produces a WebAssembly engine and an experimental HTML launcher. The launcher defaults to Excessive and loads its VM and configuration files into the browser filesystem. You must supply the Quake 3 data separately; the build does not include it.
+
+The current launcher disables networking (`net_enabled=0`). Browser multiplayer and public browser-host discovery still require a browser transport and discovery service; compiling to WebAssembly alone does not provide them.
 
 ## 🏗️ Building from Source
 
@@ -136,6 +137,10 @@ emcmake cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
 
+Copy your Quake 3 `baseq3/` data directory into `build/Release/`, serve that directory over HTTP, and open `ioquake3-excessive.html`. With Python installed, run `python3 -m http.server --directory build/Release 8000` and visit `http://localhost:8000/ioquake3-excessive.html`. An explicit `?fs_game=` selects the base game instead.
+
+For an embedded `.data` file, put the game data in the source tree's `baseq3/` directory and configure with `-DEMSCRIPTEN_PRELOAD_FILE=ON`. This also embeds Excessive. Distribute embedded proprietary game data only with the necessary rights.
+
 ## 📜 Credits
 
 **Excessive Overkill Mod**
@@ -159,9 +164,9 @@ cmake --build build
 
 ## 📄 License
 
-This project inherits the GNU General Public License v2 from ioquake3.
+The engine inherits the GNU General Public License v2 from ioquake3.
 
-The Excessive Overkill mod is freely distributable as per the original author's terms.
+The bundled Excessive mod permits redistribution with its unchanged `excessive/readme.txt`. Its source release has a separate notice in `excessive_q3_source.zip/readme.txt`: "The code may be used for any non-commercial purposes." The mod's permissions are separate from the engine's GPL license; replacing Quake 3 assets does not change those permissions.
 
 Quake 3 Arena game assets (pak files) are copyright id Software and not included.
 

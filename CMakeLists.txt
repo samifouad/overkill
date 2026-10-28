@@ -94,16 +94,8 @@ include(renderer_gl2)
 include(client)
 include(basegame)
 include(missionpack)
+include(excessive)
 
 include(post_configure)
-
-# Install the Excessive mod files
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/excessive/
-    DESTINATION excessive
-    FILES_MATCHING
-    PATTERN "*.qvm"
-    PATTERN "*.cfg"
-    PATTERN "*.txt"
-    PATTERN "*.pk3")
 
 include(installer)

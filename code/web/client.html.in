@@ -26,7 +26,7 @@ if (window.location.protocol === 'file:') throw new Error(`Unfortunately browser
 const urlParams = new URLSearchParams(window.location.search);
 const com_basegame = urlParams.get('com_basegame') || BASEGAME;
 const fs_basegame = urlParams.get('fs_basegame') || '';
-const fs_game = urlParams.get('fs_game') || '';
+const fs_game = urlParams.get('fs_game') ?? 'excessive';
 let generatedArguments = `
     +set sv_pure 0
     +set net_enabled 0
@@ -41,7 +41,7 @@ if (queryArgs) generatedArguments += ` ${queryArgs} `;
 
 const dataURL = new URL(dataPath, location.origin + location.pathname);
 
-const configPromise = EMSCRIPTEN_PRELOAD_FILE ? Promise.resolve({[BASEGAME]: {files: []}})
+const configPromise = EMSCRIPTEN_PRELOAD_FILE ? Promise.resolve({[BASEGAME]: {files: []}, excessive: {files: []}})
   : fetch(configFilename).then(r => r.ok ? r.json() : { /* empty config */ });
 
 const ioquake3 = (await import(enginePath + `@CLIENT_BINARY@.js`)).default;
@@ -59,8 +59,7 @@ ioquake3({
                 if (gamedir === '') {
                     continue;
                 }
-                if (config[gamedir] === null
-                 || config[gamedir].files === null) {
+                if (!config[gamedir]?.files) {
                     console.warn(`Game directory '${gamedir}' cannot be used. It must have files listed in ${configFilename}.`);
                     continue;
                 }
